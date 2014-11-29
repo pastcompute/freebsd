@@ -22,15 +22,15 @@ hint.ehci.0.maddr=0x1b000100
 hint.ehci.0.msize=0x00ffff00
 hint.ehci.0.irq=1
 
-hint.arge.0.at="nexus0"
-hint.arge.0.maddr=0x19000000
-hint.arge.0.msize=0x1000
-hint.arge.0.irq=2
-
 hint.arge.1.at="nexus0"
-hint.arge.1.maddr=0x1a000000
+hint.arge.1.maddr=0x19000000
 hint.arge.1.msize=0x1000
-hint.arge.1.irq=3
+hint.arge.1.irq=2
+
+hint.arge.0.at="nexus0"
+hint.arge.0.maddr=0x1a000000
+hint.arge.0.msize=0x1000
+hint.arge.0.irq=3
 
 # XXX The ath device hangs off of the AHB, rather than the Nexus.
 hint.ath.0.at="nexus0"
