@@ -104,7 +104,8 @@ hint.gpio.0.function_clear=0x00000000
 
 # These are the GPIO LEDs and buttons which can be software controlled.
 #hint.gpio.0.pinmask=0x001c02ae
-hint.gpio.0.pinmask=0x00001803
+#hint.gpio.0.pinmask=0x00001803
+hint.gpio.0.pinmask=0x003f1873
 
 # gpio0 - WLAN LED
 # gpio1 - USB LED
