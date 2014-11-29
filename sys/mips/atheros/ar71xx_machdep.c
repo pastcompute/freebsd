@@ -200,15 +200,28 @@ platform_start(__register_t a0 __unused, __register_t a1 __unused,
 	argc = a0;
 	argv = (char**)a1;
 	envp = (char**)a2;
+#else // IF CARAMBOLA2
+	argc = a0;
+	argv = (char**)a1;
+	envp = (char**)a2;
 #endif
 	/* 
 	 * Protect ourselves from garbage in registers 
 	 */
 	if (MIPS_IS_VALID_PTR(envp)) {
+#ifndef	AR71XX_ENV_UBOOT
 		for (i = 0; envp[i]; i += 2) {
 			if (strcmp(envp[i], "memsize") == 0)
 				realmem = btoc(strtoul(envp[i+1], NULL, 16));
 		}
+#else
+/* The carambola2 sets memsize=67108864 decimal, not hex */
+		for (i = 0; envp[i]; i ++) {
+			if (strncmp(envp[i], "memsize", 8) == 0)
+				realmem = btoc(strtoul(envp[i]+8, NULL, 10));
+		}
+#endif
+
 	}
 
 #ifdef	AR71XX_ENV_ROUTERBOOT
@@ -294,10 +307,19 @@ platform_start(__register_t a0 __unused, __register_t a1 __unused,
 
 	printf("Environment:\n");
 	if (MIPS_IS_VALID_PTR(envp)) {
+#ifndef	AR71XX_ENV_UBOOT
 		for (i = 0; envp[i]; i+=2) {
 			printf("  %s = %s\n", envp[i], envp[i+1]);
 			kern_setenv(envp[i], envp[i+1]);
 		}
+#else
+		for (i = 0; envp[i]; i++) {
+			char *sep = strchr(envp[i], '=');
+			*sep = 0;
+			printf("  %s = %s\n", envp[i], sep+1);
+			kern_setenv(envp[i], sep+1);
+		}
+#endif
 	}
 	else 
 		printf ("envp is invalid\n");
