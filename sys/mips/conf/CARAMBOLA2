@@ -36,7 +36,7 @@ device		etherswitch
 device		arswitch
 
 # read MSDOS formatted disks - USB
-#options 	MSDOSFS
+options 	MSDOSFS
 
 # Enable the uboot environment stuff rather then the
 # redboot stuff.
